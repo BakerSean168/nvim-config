@@ -1,7 +1,24 @@
+-- Ensure toolchain paths are visible before plugins (e.g. Mason) capture the environment.
+do
+  local function prepend_path(dir)
+    if not dir or dir == "" or vim.fn.isdirectory(dir) == 0 then
+      return
+    end
+    local path = vim.env.PATH or ""
+    if (":" .. path .. ":"):find(":" .. dir .. ":", 1, true) then
+      return
+    end
+    vim.env.PATH = dir .. ":" .. path
+  end
+  prepend_path("/usr/local/go/bin")
+  prepend_path(vim.fn.expand("~/go/bin"))
+  prepend_path(vim.fn.stdpath("data") .. "/mason/bin")
+end
+
 require("lazy").setup({
   {
     "AstroNvim/AstroNvim",
-    version = "^5", -- Remove version tracking to elect for nightly AstroNvim
+    version = "^6", -- Remove version tracking to elect for nightly AstroNvim
     import = "astronvim.plugins",
     opts = { -- AstroNvim options must be set here with the `import` key
       mapleader = " ", -- This ensures the leader key must be configured before Lazy is set up
