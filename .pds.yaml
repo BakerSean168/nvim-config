@@ -1,0 +1,14 @@
+apiVersion: pds/v1alpha1
+kind: Component
+metadata:
+  id: nvim-config
+  name: Neovim Config
+spec:
+  type: software-config
+  domain: personal-config
+  lifecycle: active
+  repository:
+    url: https://github.com/BakerSean168/nvim-config.git
+    visibility: public
+  provides:
+    - pds://personal-config/config/nvim
